@@ -120,13 +120,13 @@ crop.directive('imgCrop', ['$timeout', 'cropHost', 'cropPubSub', function($timeo
                 .on('area-move-end area-resize-end', fnSafeApply(function (scope) {
                     // if (!scope.tada) {
                     //   scope.tada = true;
-                  if (!!scope.changeOnFly) {
-                    updateResultImage(scope);
-                  }
+                  // if (!!scope.changeOnFly) {
+                  //   updateResultImage(scope);
+                  // }
                     // }
                 }))
                 .on('image-updated', fnSafeApply(function(scope) {
-                    updateResultImage(scope);
+                    // updateResultImage(scope);
                 }));
 
             // Sync CropHost with Directive's options
