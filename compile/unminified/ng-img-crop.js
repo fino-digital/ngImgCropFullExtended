@@ -5,7 +5,7 @@
  * Copyright (c) 2016 undefined
  * License: MIT
  *
- * Generated at Thursday, January 28th, 2016, 10:37:27 AM
+ * Generated at Thursday, January 28th, 2016, 10:44:24 AM
  */
 (function() {
 var crop = angular.module('ngImgCrop', []);
@@ -2697,6 +2697,7 @@ crop.directive('imgCrop', ['$timeout', 'cropHost', 'cropPubSub', function($timeo
 
             // Store Result Image to check if it's changed
             var storedResultImage;
+              console.log('tada');
 
             var updateResultImage = function (scope) {
               console.log('scope in directive', scope);
@@ -2769,16 +2770,19 @@ crop.directive('imgCrop', ['$timeout', 'cropHost', 'cropPubSub', function($timeo
                     scope.onLoadError({});
                 }))
                 .on('area-move area-resize', fnSafeApply(function(scope) {
+              console.log('changeOnFly', scope);
                     if (!!scope.changeOnFly) {
                         updateResultImage(scope);
                     }
                 }))
                 .on('area-move-end area-resize-end', fnSafeApply(function (scope) {
+              console.log('changeOnEnd', scope);
                     if (!!scope.changeOnEnd) {
                       updateResultImage(scope);
                     }
                 }))
                 .on('image-updated', fnSafeApply(function(scope) {
+              console.log('image-updated', scope);
                     updateResultImage(scope);
                 }));
 
