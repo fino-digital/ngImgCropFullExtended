@@ -24,6 +24,8 @@ crop.directive('imgCrop', ['$timeout', 'cropHost', 'cropPubSub', function($timeo
             dominantColor: '=?',
             paletteColor: '=?',
             paletteColorLength: '=?',
+            
+            eventControl: '=',
 
             onChange: '&',
             onLoadBegin: '&',
@@ -118,16 +120,20 @@ crop.directive('imgCrop', ['$timeout', 'cropHost', 'cropPubSub', function($timeo
                     }
                 }))
                 .on('area-move-end area-resize-end', fnSafeApply(function (scope) {
-                    // if (!scope.tada) {
-                    //   scope.tada = true;
-                  // if (!!scope.changeOnFly) {
-                  //   updateResultImage(scope);
-                  // }
-                    // }
+                    if (!!scope.changeOnEnd) {
+                      updateResultImage(scope);
+                    }
                 }))
                 .on('image-updated', fnSafeApply(function(scope) {
-                    // updateResultImage(scope);
+                    updateResultImage(scope);
                 }));
+
+            scope.internalEventControl = scope.eventControl || {};
+
+            scope.internalEventControl.update = fnSafeApply(function (scope) {
+              updateResultImage(scope);
+            });
+            
 
             // Sync CropHost with Directive's options
             scope.$watch('image', function(newVal) {
