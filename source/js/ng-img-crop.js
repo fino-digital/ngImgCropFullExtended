@@ -45,38 +45,38 @@ crop.directive('imgCrop', ['$timeout', 'cropHost', 'cropPubSub', function($timeo
             var storedResultImage;
 
             var updateResultImage = function(scope) {
-                // if (scope.image !== '') {
-                //     var resultImageObj = cropHost.getResultImage();
-                //     if(angular.isArray(resultImageObj)){
-                //         resultImage=resultImageObj[0].dataURI;
-                //         scope.resultArrayImage=resultImageObj;
-                //         console.log(scope.resultArrayImage);
-                //     }else var resultImage = resultImageObj.dataURI;
-                //     var urlCreator = window.URL || window.webkitURL;
-                //     if (storedResultImage !== resultImage) {
-                //         storedResultImage = resultImage;
-                //         scope.resultImage = resultImage;
+                if (scope.image !== '') {
+                    var resultImageObj = cropHost.getResultImage();
+                    if(angular.isArray(resultImageObj)){
+                        resultImage=resultImageObj[0].dataURI;
+                        scope.resultArrayImage=resultImageObj;
+                        console.log(scope.resultArrayImage);
+                    }else var resultImage = resultImageObj.dataURI;
+                    var urlCreator = window.URL || window.webkitURL;
+                    if (storedResultImage !== resultImage) {
+                        storedResultImage = resultImage;
+                        scope.resultImage = resultImage;
 
-                //         cropHost.getResultImageDataBlob().then(function(blob) {
-                //             scope.resultBlob = blob;
-                //             scope.urlBlob = urlCreator.createObjectURL(blob);
-                //         });
+                        cropHost.getResultImageDataBlob().then(function(blob) {
+                            scope.resultBlob = blob;
+                            scope.urlBlob = urlCreator.createObjectURL(blob);
+                        });
 
-                //         if (scope.resultImage) {
-                //             cropHost.getDominantColor(scope.resultImage).then(function(dominantColor) {
-                //                 scope.dominantColor = dominantColor;
-                //             });
-                //             cropHost.getPalette(scope.resultImage).then(function(palette) {
-                //                 scope.paletteColor = palette;
-                //             });
-                //         }
+                        if (scope.resultImage) {
+                            cropHost.getDominantColor(scope.resultImage).then(function(dominantColor) {
+                                scope.dominantColor = dominantColor;
+                            });
+                            cropHost.getPalette(scope.resultImage).then(function(palette) {
+                                scope.paletteColor = palette;
+                            });
+                        }
 
-                //         updateAreaCoords(scope);
-                //         scope.onChange({
-                //             $dataURI: scope.resultImage
-                //         });
-                //     }
-                // }
+                        updateAreaCoords(scope);
+                        scope.onChange({
+                            $dataURI: scope.resultImage
+                        });
+                    }
+                }
             };
 
             var updateAreaCoords = function(scope) {
@@ -117,7 +117,12 @@ crop.directive('imgCrop', ['$timeout', 'cropHost', 'cropPubSub', function($timeo
                         updateResultImage(scope);
                     }
                 }))
-                .on('area-move-end area-resize-end image-updated', fnSafeApply(function(scope) {
+                .on('area-move-end area-resize-end', fnSafeApply(function (scope) {
+                    if (!!scope.changeOnFly) {
+                        updateResultImage(scope);
+                    }
+                }))
+                .on('image-updated', fnSafeApply(function(scope) {
                     updateResultImage(scope);
                 }));
 
