@@ -48,24 +48,17 @@ crop.directive('imgCrop', ['$timeout', 'cropHost', 'cropPubSub', function($timeo
             var storedResultImage;
 
             var updateResultImage = function (scope) {   
-                console.log('updateResultImage_01', scope);
-                         
                 if (scope.image !== '') {
                     var resultImageObj = cropHost.getResultImage();
-                console.log('updateResultImage_02', resultImageObj);
                     if(angular.isArray(resultImageObj)){
                         resultImage=resultImageObj[0].dataURI;
                         scope.resultArrayImage=resultImageObj;
                         console.log(scope.resultArrayImage);
                     }else var resultImage = resultImageObj.dataURI;
-                console.log('updateResultImage_03', resultImageObj);
                     var urlCreator = window.URL || window.webkitURL;
-                console.log('updateResultImage_04', storedResultImage);
                     if (storedResultImage !== resultImage) {
                         storedResultImage = resultImage;
                         scope.resultImage = resultImage;
-                console.log('updateResultImage_05', scope.resultImage);
-
                         cropHost.getResultImageDataBlob().then(function(blob) {
                             scope.resultBlob = blob;
                             scope.urlBlob = urlCreator.createObjectURL(blob);
@@ -80,7 +73,6 @@ crop.directive('imgCrop', ['$timeout', 'cropHost', 'cropPubSub', function($timeo
                             });
                         }
 
-                console.log('updateResultImage_06', scope.resultImage);
                         updateAreaCoords(scope);
                         scope.onChange({
                             $dataURI: scope.resultImage
@@ -141,7 +133,6 @@ crop.directive('imgCrop', ['$timeout', 'cropHost', 'cropPubSub', function($timeo
               updateResultImage(scope);
             });
             
-
             // Sync CropHost with Directive's options
             scope.$watch('image', function(newVal) {
                 if(newVal) {
