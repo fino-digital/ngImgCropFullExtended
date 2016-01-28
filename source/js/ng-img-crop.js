@@ -46,22 +46,25 @@ crop.directive('imgCrop', ['$timeout', 'cropHost', 'cropPubSub', function($timeo
 
             // Store Result Image to check if it's changed
             var storedResultImage;
-              console.log('tada');
 
-            var updateResultImage = function (scope) {
-              console.log('scope in directive', scope);
-              
+            var updateResultImage = function (scope) {   
+                console.log('updateResultImage_01', scope);
+                         
                 if (scope.image !== '') {
                     var resultImageObj = cropHost.getResultImage();
+                console.log('updateResultImage_02', resultImageObj);
                     if(angular.isArray(resultImageObj)){
                         resultImage=resultImageObj[0].dataURI;
                         scope.resultArrayImage=resultImageObj;
                         console.log(scope.resultArrayImage);
                     }else var resultImage = resultImageObj.dataURI;
+                console.log('updateResultImage_03', resultImageObj);
                     var urlCreator = window.URL || window.webkitURL;
+                console.log('updateResultImage_04', storedResultImage);
                     if (storedResultImage !== resultImage) {
                         storedResultImage = resultImage;
                         scope.resultImage = resultImage;
+                console.log('updateResultImage_05', scope.resultImage);
 
                         cropHost.getResultImageDataBlob().then(function(blob) {
                             scope.resultBlob = blob;
@@ -77,6 +80,7 @@ crop.directive('imgCrop', ['$timeout', 'cropHost', 'cropPubSub', function($timeo
                             });
                         }
 
+                console.log('updateResultImage_06', scope.resultImage);
                         updateAreaCoords(scope);
                         scope.onChange({
                             $dataURI: scope.resultImage
@@ -119,26 +123,21 @@ crop.directive('imgCrop', ['$timeout', 'cropHost', 'cropPubSub', function($timeo
                     scope.onLoadError({});
                 }))
                 .on('area-move area-resize', fnSafeApply(function(scope) {
-              console.log('changeOnFly', scope);
                     if (!!scope.changeOnFly) {
                         updateResultImage(scope);
                     }
                 }))
                 .on('area-move-end area-resize-end', fnSafeApply(function (scope) {
-              console.log('changeOnEnd', scope);
                     if (!!scope.changeOnEnd) {
                       updateResultImage(scope);
                     }
                 }))
                 .on('image-updated', fnSafeApply(function(scope) {
-              console.log('image-updated', scope);
                     updateResultImage(scope);
                 }));
 
             scope.internalEventControl = scope.eventControl || {};
-            scope.internalEventControl.update = fnSafeApply(function (scope) {
-              console.log('jo', scope);
-              
+            scope.internalEventControl.update = fnSafeApply(function (scope) {              
               updateResultImage(scope);
             });
             
