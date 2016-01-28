@@ -5,7 +5,7 @@
  * Copyright (c) 2016 undefined
  * License: MIT
  *
- * Generated at Thursday, January 28th, 2016, 10:02:35 AM
+ * Generated at Thursday, January 28th, 2016, 10:37:27 AM
  */
 (function() {
 var crop = angular.module('ngImgCrop', []);
@@ -2663,6 +2663,7 @@ crop.directive('imgCrop', ['$timeout', 'cropHost', 'cropPubSub', function($timeo
             chargement: '=?',
             
             changeOnFly: '=?',
+            changeOnEnd: '=?',
             areaCoords: '=?',
             areaType: '@',
             areaMinSize: '=?',
@@ -2697,7 +2698,9 @@ crop.directive('imgCrop', ['$timeout', 'cropHost', 'cropPubSub', function($timeo
             // Store Result Image to check if it's changed
             var storedResultImage;
 
-            var updateResultImage = function(scope) {
+            var updateResultImage = function (scope) {
+              console.log('scope in directive', scope);
+              
                 if (scope.image !== '') {
                     var resultImageObj = cropHost.getResultImage();
                     if(angular.isArray(resultImageObj)){
@@ -2780,8 +2783,9 @@ crop.directive('imgCrop', ['$timeout', 'cropHost', 'cropPubSub', function($timeo
                 }));
 
             scope.internalEventControl = scope.eventControl || {};
-            scope.internalEventControl.test = 14;
             scope.internalEventControl.update = fnSafeApply(function (scope) {
+              console.log('jo', scope);
+              
               updateResultImage(scope);
             });
             
