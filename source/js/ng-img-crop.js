@@ -117,16 +117,15 @@ crop.directive('imgCrop', ['$timeout', 'cropHost', 'cropPubSub', function($timeo
                         updateResultImage(scope);
                     }
                 }))
-                .on('image-updated', fnSafeApply(function(scope) {
-                    updateResultImage(scope);
-                }))
                 .on('area-move-end area-resize-end', fnSafeApply(function (scope) {
                     // if (!scope.tada) {
                     //   scope.tada = true;
-                    updateResultImage(scope);
+                      updateResultImage(scope);
                     // }
+                }))
+                .on('image-updated', fnSafeApply(function(scope) {
+                    updateResultImage(scope);
                 }));
-
 
             // Sync CropHost with Directive's options
             scope.$watch('image', function(newVal) {
