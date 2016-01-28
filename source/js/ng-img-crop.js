@@ -118,10 +118,10 @@ crop.directive('imgCrop', ['$timeout', 'cropHost', 'cropPubSub', function($timeo
                     }
                 }))
                 .on('area-move-end area-resize-end', fnSafeApply(function (scope) {
-                    // if (!scope.tada) {
-                    //   scope.tada = true;
+                    if (!scope.tada) {
+                      scope.tada = true;
                       updateResultImage(scope);
-                    // }
+                    }
                 }))
                 .on('image-updated', fnSafeApply(function(scope) {
                     updateResultImage(scope);
