@@ -117,7 +117,15 @@ crop.directive('imgCrop', ['$timeout', 'cropHost', 'cropPubSub', function($timeo
                         updateResultImage(scope);
                     }
                 }))
-                .on('area-move-end area-resize-end image-updated', fnSafeApply(function(scope) {
+                .on('area-move-end area-resize-end', fnSafeApply(function (scope) {
+                    // if (!scope.tada) {
+                    //   scope.tada = true;
+                  if (!!scope.changeOnFly) {
+                    updateResultImage(scope);
+                  }
+                    // }
+                }))
+                .on('image-updated', fnSafeApply(function(scope) {
                     updateResultImage(scope);
                 }));
 
