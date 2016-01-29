@@ -5,7 +5,7 @@
  * Copyright (c) 2016 undefined
  * License: MIT
  *
- * Generated at Friday, January 29th, 2016, 10:53:02 AM
+ * Generated at Friday, January 29th, 2016, 11:03:52 AM
  */
 (function() {
 var crop = angular.module('ngImgCrop', []);
@@ -2679,7 +2679,6 @@ crop.directive('imgCrop', ['$timeout', 'cropHost', 'cropPubSub', function($timeo
             
             eventControl: '=',
 
-            onUpdateCalled: '&',
             onChange: '&',
             onLoadBegin: '&',
             onLoadDone: '&',
@@ -2726,13 +2725,9 @@ crop.directive('imgCrop', ['$timeout', 'cropHost', 'cropPubSub', function($timeo
                         }
 
                         updateAreaCoords(scope);
-
-                        scope.onChange({
-                            $dataURI: scope.resultImage
-                        });
                     }
                     
-                    scope.onUpdateCalled({
+                    scope.onChange({
                         $dataURI: scope.resultImage
                     });
                 }
