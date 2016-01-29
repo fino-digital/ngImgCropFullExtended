@@ -47,16 +47,22 @@ crop.directive('imgCrop', ['$timeout', 'cropHost', 'cropPubSub', function($timeo
             // Store Result Image to check if it's changed
             var storedResultImage;
 
-            var updateResultImage = function (scope) {   
+            var updateResultImage = function (scope) {
+              console.log('Ich war hier', 1);
+                 
                 if (scope.image !== '') {
+              console.log('Ich war hier', 2);
                     var resultImageObj = cropHost.getResultImage();
                     if(angular.isArray(resultImageObj)){
+              console.log('Ich war hier', 3);
                         resultImage=resultImageObj[0].dataURI;
                         scope.resultArrayImage=resultImageObj;
                         console.log(scope.resultArrayImage);
                     }else var resultImage = resultImageObj.dataURI;
+              console.log('Ich war hier', 4);
                     var urlCreator = window.URL || window.webkitURL;
                     if (storedResultImage !== resultImage) {
+              console.log('Ich war hier', 5);
                         storedResultImage = resultImage;
                         scope.resultImage = resultImage;
                         cropHost.getResultImageDataBlob().then(function(blob) {
@@ -65,6 +71,7 @@ crop.directive('imgCrop', ['$timeout', 'cropHost', 'cropPubSub', function($timeo
                         });
 
                         if (scope.resultImage) {
+              console.log('Ich war hier', 6);
                             cropHost.getDominantColor(scope.resultImage).then(function(dominantColor) {
                                 scope.dominantColor = dominantColor;
                             });
@@ -75,6 +82,7 @@ crop.directive('imgCrop', ['$timeout', 'cropHost', 'cropPubSub', function($timeo
 
                         updateAreaCoords(scope);
                     }
+              console.log('Ich war hier', 7);
                     
                     scope.onChange({
                         $dataURI: scope.resultImage
@@ -131,6 +139,7 @@ crop.directive('imgCrop', ['$timeout', 'cropHost', 'cropPubSub', function($timeo
 
             scope.internalEventControl = scope.eventControl || {};
             scope.internalEventControl.update = fnSafeApply(function (scope) {              
+              console.log('Ich war hier', 0);
               updateResultImage(scope);
             });
             
