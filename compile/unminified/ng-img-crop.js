@@ -5,7 +5,7 @@
  * Copyright (c) 2016 undefined
  * License: MIT
  *
- * Generated at Friday, January 29th, 2016, 11:15:23 AM
+ * Generated at Friday, January 29th, 2016, 11:21:42 AM
  */
 (function() {
 var crop = angular.module('ngImgCrop', []);
@@ -2679,6 +2679,7 @@ crop.directive('imgCrop', ['$timeout', 'cropHost', 'cropPubSub', function($timeo
             
             eventControl: '=',
 
+            onUpdateCalled: '&',
             onChange: '&',
             onLoadBegin: '&',
             onLoadDone: '&',
@@ -2699,21 +2700,15 @@ crop.directive('imgCrop', ['$timeout', 'cropHost', 'cropPubSub', function($timeo
             var storedResultImage;
 
             var updateResultImage = function (scope) {
-              console.log('Ich war hier', 1);
-                 
                 if (scope.image !== '') {
-              console.log('Ich war hier', 2);
                     var resultImageObj = cropHost.getResultImage();
                     if(angular.isArray(resultImageObj)){
-              console.log('Ich war hier', 3);
                         resultImage=resultImageObj[0].dataURI;
                         scope.resultArrayImage=resultImageObj;
                         console.log(scope.resultArrayImage);
                     }else var resultImage = resultImageObj.dataURI;
-              console.log('Ich war hier', 4);
                     var urlCreator = window.URL || window.webkitURL;
                     if (storedResultImage !== resultImage) {
-              console.log('Ich war hier', 5);
                         storedResultImage = resultImage;
                         scope.resultImage = resultImage;
                         cropHost.getResultImageDataBlob().then(function(blob) {
@@ -2722,7 +2717,6 @@ crop.directive('imgCrop', ['$timeout', 'cropHost', 'cropPubSub', function($timeo
                         });
 
                         if (scope.resultImage) {
-              console.log('Ich war hier', 6);
                             cropHost.getDominantColor(scope.resultImage).then(function(dominantColor) {
                                 scope.dominantColor = dominantColor;
                             });
@@ -2732,10 +2726,13 @@ crop.directive('imgCrop', ['$timeout', 'cropHost', 'cropPubSub', function($timeo
                         }
 
                         updateAreaCoords(scope);
+
+                        scope.onChange({
+                            $dataURI: scope.resultImage
+                        });
                     }
-              console.log('Ich war hier', 7);
                     
-                    scope.onChange({
+                    scope.onUpdateCalled({
                         $dataURI: scope.resultImage
                     });
                 }
