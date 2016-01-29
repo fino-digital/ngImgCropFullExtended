@@ -28,6 +28,7 @@ crop.directive('imgCrop', ['$timeout', 'cropHost', 'cropPubSub', function($timeo
             
             eventControl: '=',
 
+            onUpdateCalled: '&',
             onChange: '&',
             onLoadBegin: '&',
             onLoadDone: '&',
@@ -74,10 +75,15 @@ crop.directive('imgCrop', ['$timeout', 'cropHost', 'cropPubSub', function($timeo
                         }
 
                         updateAreaCoords(scope);
+
                         scope.onChange({
                             $dataURI: scope.resultImage
                         });
                     }
+                    
+                    scope.onUpdateCalled({
+                        $dataURI: scope.resultImage
+                    });
                 }
             };
 
