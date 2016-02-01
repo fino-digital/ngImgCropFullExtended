@@ -136,7 +136,6 @@ crop.directive('imgCrop', ['$timeout', 'cropHost', 'cropPubSub', function($timeo
 
             scope.internalEventControl = scope.eventControl || {};
             scope.internalEventControl.update = fnSafeApply(function (scope) {              
-              console.log('Ich war hier', 0);
               updateResultImage(scope);
             });
             

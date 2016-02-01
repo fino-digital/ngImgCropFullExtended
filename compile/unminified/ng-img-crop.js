@@ -5,7 +5,7 @@
  * Copyright (c) 2016 undefined
  * License: MIT
  *
- * Generated at Friday, January 29th, 2016, 11:21:42 AM
+ * Generated at Monday, February 1st, 2016, 8:22:53 AM
  */
 (function() {
 var crop = angular.module('ngImgCrop', []);
@@ -2787,7 +2787,6 @@ crop.directive('imgCrop', ['$timeout', 'cropHost', 'cropPubSub', function($timeo
 
             scope.internalEventControl = scope.eventControl || {};
             scope.internalEventControl.update = fnSafeApply(function (scope) {              
-              console.log('Ich war hier', 0);
               updateResultImage(scope);
             });
             
